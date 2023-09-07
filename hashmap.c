@@ -87,7 +87,7 @@ HashMap * createMap(long capacity) {
    mapa->capacity = capacity;
    mapa->size = 0;
    mapa->current = -1;
-   mapa->buckets = (Pair**)calloc(capacity, sizeof(Pair*)); //usa calloc aqui hola como chucha se usa calloc
+   mapa->buckets = (Pair**)calloc(capacity, sizeof(Pair*)); //usa calloc aqui 
    if(mapa->buckets==NULL){ 
      free(mapa);
      return NULL; 
@@ -100,14 +100,37 @@ malloc(argumento1 * sizeof(argumento2)); -> inicializa con datos basura
 calloc(argumento1 , sizeof(argumento2)); -> inicializa con 0s
 */
 
+
 void eraseMap(HashMap * map,  char * key) {    
 
 
 }
+/*/3.- Implemente la función Pair * searchMap(HashMap * map,  char * key), la cual retorna el **Pair** asociado a la clave ingresada. 
+Recuerde que para buscar el par debe:
 
-Pair * searchMap(HashMap * map,  char * key) {   
+a - Usar la función hash para obtener la posición donde puede encontrarse el paIr con la clave
 
+b - Si la clave no se encuentra avance hasta encontrarla (*método de resolución de colisiones*)
 
+c - Si llega a una casilla nula, retorne NULL inmediatamente (no siga avanzando, la clave no está)
+
+Recuerde actualizar el índice current a la posición encontrada.
+Recuerde que el arreglo es **circular**.
+*/
+Pair * searchMap(HashMap * map,  char * key) {  
+  if (map==NULL||key==NULL) return NULL; 
+  long indice=hash(key,map->capacity);
+  if(strcmp(map->buckets[indice]->key,key)==0){
+    return map->buckets[indice];
+  }else{
+    while(strcmp(map->buckets[indice]->key,key)!=0){
+      indice=(indice+1)%map->capacity;
+      if (map->buckets[indice]->key==NULL)return NULL;
+      
+      
+    }
+    return map->buckets[indice];
+  }
     return NULL;
 }
 
