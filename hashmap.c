@@ -57,13 +57,18 @@ HashMap * createMap(long capacity) {
    mapa->capacity = capacity;
    mapa->size = 0;
    mapa->current = -1;
-   mapa->buckets = (Pair**)malloc(sizeof(Pair*) * capacity);
-   if(mapa->buckets==NULL){
+   mapa->buckets = (Pair**)calloc(capacity, sizeof(Pair*)); //usa calloc aqui hola como chucha se usa calloc
+   if(mapa->buckets==NULL){ 
      free(mapa);
-     return NULL;
+     return NULL; 
    }
     return mapa;
 }
+
+/*
+malloc(argumento1 * sizeof(argumento2)); -> inicializa con datos basura
+calloc(argumento1 , sizeof(argumento2)); -> inicializa con 0s
+*/
 
 void eraseMap(HashMap * map,  char * key) {    
 
