@@ -125,14 +125,14 @@ Pair * searchMap(HashMap * map,  char * key) {
     return map->buckets[indice];
     
   }else{
-    while(strcmp(map->buckets[indice]->key,key)==1&&map->buckets[indice]!=NULL){
+    while(map->buckets[indice]!=NULL){
+      if(strcmp(map->buckets[indice]->key,key)==0){
+        map->current=indice;
+        return map->buckets[indice];
+      }
       indice=(indice+1)%map->capacity;
-      if (map->buckets[indice]->key==NULL&&map->buckets[indice]==NULL)return NULL;
-      
-      
     }
-    map->current=indice;
-    return map->buckets[indice];
+    return NULL;
   }
     return NULL;
 }
