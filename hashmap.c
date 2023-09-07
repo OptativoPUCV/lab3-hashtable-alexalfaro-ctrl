@@ -47,7 +47,7 @@ b - Si la casilla se encuentra ocupada, avance hasta una casilla disponible (mé
 
 c - Ingrese el par en la casilla que encontró.
 
-
+listo 100%
 */
 void insertMap(HashMap * map, char * key, void * value) {
   if(map==NULL||key==NULL)return;
@@ -59,7 +59,10 @@ void insertMap(HashMap * map, char * key, void * value) {
     map->size++;
   } else { 
     while (map->buckets[indice]!=NULL||map->buckets[indice]->key!=NULL){
-      indice=(indice+1) % map->capacity; 
+      if(strcmp(map->buckets[indice]->key,key)==0){
+        return;
+      }
+      indice=(indice+1) % map->capacity; //me piro 
     }
     map->buckets[indice]= createPair(key,value);
     map->current=indice;
