@@ -58,7 +58,7 @@ void insertMap(HashMap * map, char * key, void * value) {
     map->current=indice;
     map->size++;
   } else { 
-    while (map->buckets[indice]!=NULL||map->buckets[indice]->key!=NULL){
+    while (map->buckets[indice]!=NULL&&map->buckets[indice]->key!=NULL){
       if(strcmp(map->buckets[indice]->key,key)==0){
         return;
       }
