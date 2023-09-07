@@ -121,8 +121,9 @@ Pair * searchMap(HashMap * map,  char * key) {
   if (map==NULL||key==NULL) return NULL; 
   long indice=hash(key,map->capacity);
   if(strcmp(map->buckets[indice]->key,key)==0){
-    return map->buckets[indice];
     map->current=indice;
+    return map->buckets[indice];
+    
   }else{
     while(strcmp(map->buckets[indice]->key,key)!=0){
       indice=(indice+1)%map->capacity;
