@@ -38,8 +38,26 @@ int is_equal(void* key1, void* key2){
     return 0;
 }
 
+/*
+a - Aplicar la función hash a la clave para obtener la posición donde debería insertar el nuevo par
 
+b - Si la casilla se encuentra ocupada, avance hasta una casilla disponible (método de resolución de colisiones). Una casilla disponible es una casilla nula, pero también una que tenga un par inválido (key==NULL).
+
+c - Ingrese el par en la casilla que encontró.
+*/
 void insertMap(HashMap * map, char * key, void * value) {
+  if(map==NULL||key)return;
+  long indice=hash(key,map->capacity);
+  
+  if(map->buckets[indice]==NULL){
+    map->buckets[indice]= createPair(key,value);
+  } else { 
+    while (map->buckets[indice]!=NULL){
+      indice++;
+    }
+    map->buckets[indice]= createPair(key,value);
+  }
+  
 
 
 }
@@ -65,7 +83,7 @@ HashMap * createMap(long capacity) {
     return mapa;
 }
 
-/*
+/*//no cachaba ese protip
 malloc(argumento1 * sizeof(argumento2)); -> inicializa con datos basura
 calloc(argumento1 , sizeof(argumento2)); -> inicializa con 0s
 */
