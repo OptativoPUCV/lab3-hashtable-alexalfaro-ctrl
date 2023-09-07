@@ -107,7 +107,7 @@ if(map==NULL||key==NULL) return ;
 long indice=hash(key,map->capacity);
 if(strcmp(map->buckets[indice]->key,key)==0){
   map->buckets[indice]->key=NULL;
-  
+  map->size--;
 }
   
   
