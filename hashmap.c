@@ -127,7 +127,7 @@ Pair * searchMap(HashMap * map,  char * key) {
   }else{
     while(strcmp(map->buckets[indice]->key,key)!=0){
       indice=(indice+1)%map->capacity;
-      if (map->buckets[indice]->key==NULL)return NULL;
+      if (map->buckets[indice]->key==NULL&&map->buckets[indice]==NULL)return NULL;
       
       
     }
