@@ -175,3 +175,14 @@ test.c:100:6: error: ‘hash_test1’ defined but not used [-Werror=unused-funct
 cc1: all warnings being treated as errors
 Compilation failed
 80ab74e
+Fri 08 Sep 2023 06:00:13 PM UTC: 
+ hashmap.c | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
+In file included from test.c:4:
+hashmap.c: In function ‘eraseMap’:
+hashmap.c:110:30: error: statement with no effect [-Werror=unused-value]
+  110 |     map->buckets[indice]->key==NULL;
+      |                              ^
+cc1: all warnings being treated as errors
+Compilation failed
+b718eed
