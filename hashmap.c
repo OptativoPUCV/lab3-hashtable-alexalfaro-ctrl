@@ -108,11 +108,12 @@ long indice=hash(key,map->capacity);
 if(strcmp(map->buckets[indice]->key,key)==0){
   map->buckets[indice]->key=NULL;
   map->size--;
-}
-  
-  
-
-
+}else{
+    while(map->buckets[indice]!=NULL){
+      if(strcmp(map->buckets[indice]->key,key)==0){
+        map->current=indice;
+        return
+      }
 }
 /*/3.- Implemente la función Pair * searchMap(HashMap * map,  char * key), la cual retorna el **Pair** asociado a la clave ingresada. 
 Recuerde que para buscar el par debe:
