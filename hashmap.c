@@ -135,16 +135,18 @@ Pair * searchMap(HashMap * map,  char * key) {
   return NULL;
 }
 
+
 Pair * firstMap(HashMap * map) {
   if(map==NULL)return NULL;
   long cont=0;
   while (map->buckets[cont]==NULL){
     cont++;
-    return map->buckets[cont];
+    
   }
-  
+  map->current=cont;
+  return map->buckets[cont];
 
-    return NULL;
+  
 }
 
 Pair * nextMap(HashMap * map) {
