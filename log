@@ -137,3 +137,9 @@ test.c:100:6: error: ‘hash_test1’ defined but not used [-Werror=unused-funct
 cc1: all warnings being treated as errors
 Compilation failed
 12fb387
+Fri 08 Sep 2023 05:47:34 PM UTC: 
+ hashmap.c | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
+ tests:  8|3
+total_score: 40/70
+d553828
