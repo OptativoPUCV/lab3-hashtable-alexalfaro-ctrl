@@ -139,7 +139,7 @@ Pair * searchMap(HashMap * map,  char * key) {
 Pair * firstMap(HashMap * map) {
   if(map==NULL)return NULL;
   long cont=0;
-  while (map->buckets[cont]==NULL){
+  while (map->buckets[cont]==NULL||map->buckets[cont]->key!=NULL){
     cont++;
     
   }
