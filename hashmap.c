@@ -150,6 +150,13 @@ Pair * firstMap(HashMap * map) {
 }
 
 Pair * nextMap(HashMap * map) {
-
+  if(map==NULL)return NULL;
+  long temp=map->current;
+  while(temp<map->capacity){
+    map->current=temp;
+    return map->buckets[temp];
+    
+  }
+  temp++;
     return NULL;
 }
