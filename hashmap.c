@@ -62,7 +62,7 @@ void insertMap(HashMap * map, char * key, void * value) {
       if(strcmp(map->buckets[indice]->key,key)==0){
         return;
       }
-      indice=(indice+1) % map->capacity; //me piro 
+      indice=(indice+1) % map->capacity; 
     }
     map->buckets[indice]= createPair(key,value);
     map->current=indice;
@@ -87,7 +87,7 @@ HashMap * createMap(long capacity) {
    mapa->capacity = capacity;
    mapa->size = 0;
    mapa->current = -1;
-   mapa->buckets = (Pair**)calloc(capacity, sizeof(Pair*)); //usa calloc aqui 
+   mapa->buckets = (Pair**)calloc(capacity, sizeof(Pair*)); 
    if(mapa->buckets==NULL){ 
      free(mapa);
      return NULL; 
@@ -104,6 +104,10 @@ Recuerde actualizar la variable size.
 
 void eraseMap(HashMap * map,  char * key) { 
 if(map==NULL||key==NULL) return ;
+long indice=hash(key,map->capacity);
+if(strcmp(map->buckets[indice]->key,key)==0){
+  map->buckets[indice]->key=NULL;
+  map->size--;
 
 }
 /*/3.- Implemente la función Pair * searchMap(HashMap * map,  char * key), la cual retorna el **Pair** asociado a la clave ingresada. 
