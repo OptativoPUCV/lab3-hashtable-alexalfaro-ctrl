@@ -150,17 +150,16 @@ Pair * firstMap(HashMap * map) {
 }
 
 Pair * nextMap(HashMap * map) {
-  if(map==NULL)return NULL;
-  
-  int temp=map->current+1;
-  while(temp<map->capacity){
-    if(map->buckets[temp]!=NULL&&map->buckets[temp]->key!=NULL){ 
-      map->current=temp;
-      return map->buckets[temp];
+  if(map!=NULL){
+    int temp=map->current+1;
+    while(temp<map->capacity){
+      if(map->buckets[temp]!=NULL&&map->buckets[temp]->key!=NULL){ 
+        map->current=temp;
+        return map->buckets[temp];
+      }
+      temp++;
     }
-    temp++;
-  }
     
-  
+  }
   return NULL;
 }
