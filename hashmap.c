@@ -153,10 +153,10 @@ Pair * nextMap(HashMap * map) {
   if(map!=NULL){
     long temp=map->current+1;
     while(temp<map->capacity){
-      if(map->buckets!=NULL)
-      map->current=temp;
-      return map->buckets[temp];
-    
+      if(map->buckets!=NULL){ 
+        map->current=temp;
+        return map->buckets[temp];
+      }
     }
     temp++;
   }
