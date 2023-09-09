@@ -94,16 +94,16 @@ void enlarge(HashMap * map) {
   }
     
   Pair **aux=map->buckets;
-  map->capacity*=2;
+  map->capacity *= 2;
   map->buckets=(Pair**)malloc(map->capacity*sizeof(Pair*));
   map->size=0;
     
-  for(int i=0;map->capacity/2 ;i++){ 
-      
-    if( aux[i] !=NULL && aux[i]->key!=NULL){ 
+  for(long i=0;map->capacity / 2 ;i++){ 
+
+    if( aux[i] != NULL && aux[i]->key != NULL){ 
       insertMap(map,aux[i]->key,aux[i]->value);
       
-    }
+    }  
   }
   free(aux);
 
