@@ -165,19 +165,15 @@ Pair * searchMap(HashMap * map,  char * key) {
   
   long indice = hash(key,map->capacity);//calculo de l indice por la funcion hash
   
+  if( strcmp(map->buckets[indice]->key,key)==0 ){//se comparan las lalves
+    
+    map->current = indice;//se actualiza el indice
+    return map->buckets[indice]; //se retorna el puntero
+    
 
-    while(map->buckets[indice]!=NULL){
-      
-      if(strcmp(map->buckets[indice]->key,key)==0){  
-        map->current = indice;
-        return map->buckets[indice];
-      }
-      
-      indice=(indice+1)%map->capacity;
-    }
-    return NULL;
   }
-
+  return NULL;
+}
 
 
 Pair * firstMap(HashMap * map) {
