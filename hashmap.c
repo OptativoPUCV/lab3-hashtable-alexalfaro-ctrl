@@ -98,9 +98,9 @@ void enlarge(HashMap * map) {
   map->buckets=(Pair**)malloc(map->capacity*sizeof(Pair*));
   map->size=0;
     
-  for(long i=0;map->capacity/2 ;i++){ 
+  for(int i=0;map->capacity/2 ;i++){ 
       
-    if( aux[i]!=NULL && aux[i]->key!=NULL){
+    if( aux[i] !=NULL && aux[i]->key!=NULL){ 
       insertMap(map,aux[i]->key,aux[i]->value);
       
     }
