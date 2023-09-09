@@ -38,17 +38,7 @@ int is_equal(void* key1, void* key2){
     return 0;
 }
 
-/*
-2.- Implemente la función void insertMap(HashMap * map, char * key, void * value). Esta función inserta un nuevo dato (key,value) en el mapa y actualiza el índice current a esa posición.
 
-a - Aplicar la función hash a la clave para obtener la posición donde debería insertar el nuevo par
-
-b - Si la casilla se encuentra ocupada, avance hasta una casilla disponible (método de resolución de colisiones). Una casilla disponible es una casilla nula, pero también una que tenga un par inválido (key==NULL).
-
-c - Ingrese el par en la casilla que encontró.
-
-listo 100%
-*/
 
 void insertMap(HashMap * map, char * key, void * value) {
   if(map == NULL || key == NULL) return;// primero se verifica si el mapa y la llave son nulos
@@ -81,19 +71,7 @@ void insertMap(HashMap * map, char * key, void * value) {
 
 
 }
-/*Implemente la función void enlarge(HashMap * map). Esta función agranda la capacidad del arreglo buckets y reubica todos sus elementos. Para hacerlo es recomendable mantener referenciado el arreglo *actual/antiguo* de la tabla con un puntero auxiliar. Luego, los valores de la tabla se reinicializan con un nuevo arreglo con el **doble de capacidad**. Por último los elementos del arreglo antiguo se insertan en el mapa *vacío* con el método *insertMap*.
-Puede seguir los siguientes pasos:
 
-a - Cree una variable auxiliar de tipo Pair** para matener el arreglo map->buckets (*old_buckets*);
-
-b - Duplique el valor de la variable capacity.
-
-c - Asigne a map->buckets un nuevo arreglo con la nueva capacidad.
-
-d - Inicialice size a 0.
-
-e - Inserte los elementos del arreglo *old_buckets* en el mapa (use la función insertMap que ya implementó).
-*/
 void enlarge(HashMap * map) {
   enlarge_called = 1; //no borrar (testing purposes)
   
@@ -134,11 +112,6 @@ HashMap * createMap(long capacity) {
     return mapa;
 }
 
-/*//
-Implemente la función void eraseMap(HashMap * map,  char * key). Está función elimina el dato correspondiente a la clave key. Para hacerlo debe buscar el dato y luego *marcarlo* para que no sea válido.
-**No elimine el par**, sólo invalídelo asignando NULL a la clave (pair->key=NULL).
-Recuerde actualizar la variable size.
-*/
 
 
 void eraseMap(HashMap * map,  char * key) { 
@@ -168,9 +141,22 @@ Pair * searchMap(HashMap * map,  char * key) {
   if( strcmp(map->buckets[indice]->key,key)==0 ){//se comparan las lalves
     
     map->current = indice;//se actualiza el indice
-    return map->buckets[indice]; //se retorna el puntero
+    return map->buckets[indice]; //se retorna el pair
     
-
+  }else{
+    
+    while(map->buckets[indice]!=NULL){// si no se encuentra se recorre 
+      
+      if(strcmp(map->buckets[indice]->key,key)==0){  // se comparan las claves
+        map->current = indice; // se actualiza el indice
+        return map->buckets[indice]; //se retorna el pair
+      }
+      
+      indice=(indice+1)%map->capacity;// se aumenta el indice
+      
+      
+    }
+    return NULL;//si no se retorna null
   }
   return NULL;
 }
@@ -180,12 +166,13 @@ Pair * firstMap(HashMap * map) {
   if (map == NULL) return NULL;//si el mapa  se retorna null
   
   long cont = 0;
-  while (map->buckets[cont]==NULL || map->buckets[cont]->key==NULL){
+  while (map->buckets[cont]==NULL || map->buckets[cont]->key==NULL){// busca el primer elemento con un valor al econtrarlo se detiene
     cont++;
   }
   
-  map->current = cont;
-  return map->buckets[cont];
+  map->current = cont; //se actualiza el current
+  
+  return map->buckets[cont];// se retorna el pair
 
   
 }
@@ -194,13 +181,13 @@ Pair * nextMap(HashMap * map) {
   if(map != NULL){//si el mapa es distinto de NULL entra ala condicion si no retorna null
     
     int temp = map->current+1;
-    while(temp<map->capacity){  
-      if(map->buckets[temp] != NULL && map->buckets[temp]->key != NULL){ 
+    while(temp<map->capacity){  // esto es para asegurar de no salirnos del limite del arreglo
+      if(map->buckets[temp] != NULL && map->buckets[temp]->key != NULL){ // si el pair no es nullo y el key tampoco lo encontramos
         
-        map->current = temp;
-        return map->buckets[temp];
+        map->current = temp;// se actualiza el current
+        return map->buckets[temp]; // se retorna el pair
       }
-      temp++;
+      temp++;// se aumenta el valor del temp en uno para seguir recorrientdo
     }
     
   }
