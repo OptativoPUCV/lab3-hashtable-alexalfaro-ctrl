@@ -50,22 +50,29 @@ c - Ingrese el par en la casilla que encontró.
 listo 100%
 */
 void insertMap(HashMap * map, char * key, void * value) {
-  if(map==NULL||key==NULL)return;
-  long indice=hash(key,map->capacity);
+  if(map == NULL || key == NULL) return;
   
-  if(map->buckets[indice]==NULL){
-    map->buckets[indice]= createPair(key,value);
-    map->current=indice;
+  long indice = hash(key, map->capacity);
+  if(map->buckets[indice] == NULL){
+    
+    map->buckets[indice] = createPair(key,value);
+    map->current = indice;
     map->size++;
+    
   } else { 
-    while (map->buckets[indice]!=NULL&&map->buckets[indice]->key!=NULL){
+    
+    while (map->buckets[indice] != NULL && map->buckets[indice]->key != NULL){
+      
       if(strcmp(map->buckets[indice]->key,key)==0){
         return;
+        
       }
-      indice=(indice+1) % map->capacity; 
+      
+      indice = (indice+1) % map->capacity; 
     }
-    map->buckets[indice]= createPair(key,value);
-    map->current=indice;
+    
+    map->buckets[indice] = createPair(key,value);
+    map->current = indice;
     map->size++;
     
   }
@@ -92,21 +99,20 @@ void enlarge(HashMap * map) {
   if (map == NULL){
     return;
   }
-    
-  Pair **aux=map->buckets;
+  //ahora lo comentare
+  Pair **aux=map->buckets; // aux representa **old_buckets**
   map->capacity *= 2;
-  map->buckets=(Pair**)malloc(map->capacity*sizeof(Pair*));
-  map->size=0;
+  map->buckets = (Pair**)malloc(map->capacity*sizeof(Pair*));
+  map->size = 0;
     
-  for(long i=0;i<map->capacity / 2 ;i++){ 
+  for(long i = 0; i < map->capacity/2 ; i++){ 
 
     if( aux[i] != NULL && aux[i]->key != NULL){ 
-      insertMap(map,aux[i]->key,aux[i]->value);
+      insertMap(map, aux[i]->key, aux[i]->value);
       
     }  
-  }
-  free(aux);
-
+  }//aprendi la leccion primera vez q me pasa XD
+  free(aux); //mira anda a eraseMap
 
 }
 
@@ -133,31 +139,41 @@ Recuerde actualizar la variable size.
 
 
 void eraseMap(HashMap * map,  char * key) { 
-if(map==NULL||key==NULL) return ;
-long indice=hash(key,map->capacity);
-while(map->buckets[indice]!=NULL){
-  if(map->buckets[indice]->key!=NULL&&strcmp(map->buckets[indice]->key,key)==0){
-    map->buckets[indice]->key=NULL;
+if (map==NULL || key==NULL) return; 
+  
+long indice = hash(key, map->capacity);
+
+  while ( map->buckets[indice] != NULL ){
+  
+  if((map->buckets[indice]->key != NULL) && (strcmp(map->buckets[indice]->key,key)==0)){
+    map->buckets[indice]->key = NULL;
     map->size--;
   }
-  indice=(indice+1)%map->capacity;
+  
+  indice = (indice+1)%map->capacity;
 }
 
 }
 
 Pair * searchMap(HashMap * map,  char * key) {  
-  if (map==NULL||key==NULL) return NULL; 
-  long indice=hash(key,map->capacity);
-  if(strcmp(map->buckets[indice]->key,key)==0){
-    map->current=indice;
+  if (map==NULL || key==NULL) return NULL; 
+  
+  long indice = hash(key,map->capacity);
+  
+  if( strcmp(map->buckets[indice]->key,key)==0 ){
+    
+    map->current = indice;
     return map->buckets[indice];
     
   }else{
+    
     while(map->buckets[indice]!=NULL){
-      if(strcmp(map->buckets[indice]->key,key)==0){
-        map->current=indice;
+      
+      if(strcmp(map->buckets[indice]->key,key)==0){  
+        map->current = indice;
         return map->buckets[indice];
       }
+      
       indice=(indice+1)%map->capacity;
     }
     return NULL;
@@ -167,24 +183,27 @@ Pair * searchMap(HashMap * map,  char * key) {
 
 
 Pair * firstMap(HashMap * map) {
-  if(map==NULL)return NULL;
-  long cont=0;
-  while (map->buckets[cont]==NULL||map->buckets[cont]->key==NULL){
+  if (map == NULL) return NULL;
+  
+  long cont = 0;
+  while (map->buckets[cont]==NULL || map->buckets[cont]->key==NULL){
     cont++;
-    
   }
-  map->current=cont;
+  
+  map->current = cont;
   return map->buckets[cont];
 
   
 }
 
 Pair * nextMap(HashMap * map) {
-  if(map!=NULL){
-    int temp=map->current+1;
-    while(temp<map->capacity){
-      if(map->buckets[temp]!=NULL&&map->buckets[temp]->key!=NULL){ 
-        map->current=temp;
+  if(map != NULL){
+    
+    int temp = map->current+1;
+    while(temp<map->capacity){  
+      if(map->buckets[temp] != NULL && map->buckets[temp]->key != NULL){ 
+        
+        map->current = temp;
         return map->buckets[temp];
       }
       temp++;
