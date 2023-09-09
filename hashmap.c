@@ -49,26 +49,27 @@ c - Ingrese el par en la casilla que encontró.
 
 listo 100%
 */
+
 void insertMap(HashMap * map, char * key, void * value) {
-  if(map == NULL || key == NULL) return;
+  if(map == NULL || key == NULL) return;// primero se verifica si el mapa y la llave son nulos
   
-  long indice = hash(key, map->capacity);
-  if(map->buckets[indice] == NULL){
+  long indice = hash(key, map->capacity);//se calcula el indice con la funcion hash
+  if(map->buckets[indice] == NULL){ //si el indice esta vacio
     
-    map->buckets[indice] = createPair(key,value);
-    map->current = indice;
-    map->size++;
+    map->buckets[indice] = createPair(key,value);// se agrega el pair o bucket
+    map->current = indice;// se actualiza el indice
+    map->size++; // se aumenta el tamaño del mapa
     
   } else { 
     
     while (map->buckets[indice] != NULL && map->buckets[indice]->key != NULL){
       
-      if(strcmp(map->buckets[indice]->key,key)==0){
+      if(strcmp(map->buckets[indice]->key,key)==0){// si la clave ya existe no se hace nada
         return;
         
       }
       
-      indice = (indice+1) % map->capacity; 
+      indice = (indice+1) % map->capacity; // se aumenta el indice
     }
     
     map->buckets[indice] = createPair(key,value);
@@ -99,31 +100,33 @@ void enlarge(HashMap * map) {
   if (map == NULL){
     return;
   }
-  //ahora lo comentare
+  
   Pair **aux=map->buckets; // aux representa **old_buckets**
-  map->capacity *= 2;
-  map->buckets = (Pair**)malloc(map->capacity*sizeof(Pair*));
-  map->size = 0;
+  map->capacity *= 2;// se aumenta la capcidad al doble
+  map->buckets = (Pair**)malloc(map->capacity*sizeof(Pair*)); //se crea el nuevo arreglo con la nueva capacidad
+  map->size = 0;// se inicializa size en 0
     
-  for(long i = 0; i < map->capacity/2 ; i++){ 
+  for(long i = 0; i < map->capacity/2 ; i++){  // se recorre el mapa hasta la mitad para insertar los datos anterioes
 
     if( aux[i] != NULL && aux[i]->key != NULL){ 
-      insertMap(map, aux[i]->key, aux[i]->value);
+      insertMap(map, aux[i]->key, aux[i]->value);//se insertan los valores
       
     }  
-  }//aprendi la leccion primera vez q me pasa XD
-  free(aux); //mira anda a eraseMap
+  }
+  free(aux); 
 
 }
 
 
 HashMap * createMap(long capacity) {
-  HashMap* mapa = (HashMap*)malloc(sizeof(HashMap));
+  HashMap* mapa = (HashMap*)malloc(sizeof(HashMap));//se hace la reserva de memoria para la estructura
+  
   if(mapa==NULL) return NULL;
-   mapa->capacity = capacity;
+  
+   mapa->capacity = capacity; // se inicializan
    mapa->size = 0;
    mapa->current = -1;
-   mapa->buckets = (Pair**)calloc(capacity, sizeof(Pair*)); 
+   mapa->buckets = (Pair**)calloc(capacity, sizeof(Pair*)); // se inicializan los espacios con 0
    if(mapa->buckets==NULL){ 
      free(mapa);
      return NULL; 
@@ -139,26 +142,28 @@ Recuerde actualizar la variable size.
 
 
 void eraseMap(HashMap * map,  char * key) { 
-if (map==NULL || key==NULL) return; 
+if (map==NULL || key==NULL) return; //si el mapa o la llave son nulas se retorna
   
-long indice = hash(key, map->capacity);
+long indice = hash(key, map->capacity); // calculo de indice con la funcion hash
 
-  while ( map->buckets[indice] != NULL ){
+  while ( map->buckets[indice] != NULL ){ // si el indice es distinto de null,se recorre el mapa para buscar el elemento a eliminar
   
-  if((map->buckets[indice]->key != NULL) && (strcmp(map->buckets[indice]->key,key)==0)){
-    map->buckets[indice]->key = NULL;
-    map->size--;
+  if((map->buckets[indice]->key != NULL) && (strcmp(map->buckets[indice]->key,key)==0)){ // si el bucket no esta vacio y las keys son iguales
+                                                                                          //encontramos el elemento que queremos borra
+    map->buckets[indice]->key = NULL;  //se marca como null
+    map->size--;// se reduce el espacio
   }
   
-  indice = (indice+1)%map->capacity;
+  indice = (indice+1)%map->capacity;// se aumenta el indice
 }
 
 }
+
 
 Pair * searchMap(HashMap * map,  char * key) {  
-  if (map==NULL || key==NULL) return NULL; 
+  if (map==NULL || key==NULL) return NULL; //si el mapa o la llave son nulas se retorna
   
-  long indice = hash(key,map->capacity);
+  long indice = hash(key,map->capacity);//calculo de l indice por la funcion hash
   
   if( strcmp(map->buckets[indice]->key,key)==0 ){
     
@@ -183,7 +188,7 @@ Pair * searchMap(HashMap * map,  char * key) {
 
 
 Pair * firstMap(HashMap * map) {
-  if (map == NULL) return NULL;
+  if (map == NULL) return NULL;//si el mapa  se retorna null
   
   long cont = 0;
   while (map->buckets[cont]==NULL || map->buckets[cont]->key==NULL){
@@ -197,7 +202,7 @@ Pair * firstMap(HashMap * map) {
 }
 
 Pair * nextMap(HashMap * map) {
-  if(map != NULL){
+  if(map != NULL){//si el mapa es distinto de NULL entra ala condicion si no retorna null
     
     int temp = map->current+1;
     while(temp<map->capacity){  
