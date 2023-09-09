@@ -99,14 +99,14 @@ void enlarge(HashMap * map) {
     
     for(long i=0;map->capacity/2 ;i++){ 
       
-      if( aux[i]!=NULL && aux[i]->key!=NULL){
+      if( aux[i]->key!=NULL){
         insertMap(map,aux[i]->key,aux[i]->value);
       
       }
     }
     free(aux);
   }
-  return;// quiero ver si me deja hacer algo mientras estoy conectado
+  return;// 
 }
 
 
